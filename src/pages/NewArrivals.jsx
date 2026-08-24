@@ -177,27 +177,27 @@ const NewArrivals = () => {
       )}
 
       {/* HEADER */}
-      <div className="bg-linear-to-b from-[#DCE2CC] to-[#F3F1E7] pt-28 pb-16 px-6 text-center relative overflow-hidden">
+      <div className="bg-linear-to-b from-[#DCE2CC] to-[#F3F1E7] pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-125 bg-[radial-gradient(circle,rgba(184,196,168,0.25)_0%,transparent_70%)] rounded-full" />
         <p className="relative text-[0.7rem] tracking-[0.35em] uppercase text-[#B85C4A] mb-4 font-bold">Pre Order Now 🔥</p>
-        <h1 className="relative text-[clamp(2.5rem,5vw,4rem)] font-light tracking-[-0.03em] mb-4">
+        <h1 className="relative text-[clamp(2.25rem,8vw,4rem)] font-light tracking-[-0.03em] mb-4 px-2">
           New Arrivals
         </h1>
-        <p className="relative text-stone max-w-125 mx-auto leading-[1.8] text-[0.95rem]">
+        <p className="relative text-stone max-w-125 mx-auto leading-[1.8] text-[0.95rem] px-2">
           Naturally dyed. Ethically woven. Designed for those who find beauty in texture
           and calm in color. Each piece carries the warmth of human hands.
         </p>
       </div>
 
       {/* FILTER & SORT BAR */}
-      <div className="sticky top-0 z-50 bg-snow/95 backdrop-blur-md border-b border-black/4 px-6 py-4">
+      <div className="sticky top-0 z-50 bg-snow/95 backdrop-blur-md border-b border-black/4 px-4 sm:px-6 py-3 sm:py-4">
         <div className="max-w-325 mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide flex-nowrap">
             {filters.map(filter => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`rounded-full px-5 py-2 text-[0.8rem] font-semibold tracking-wider cursor-pointer transition-all duration-300 whitespace-nowrap ${activeFilter === filter
+                className={`shrink-0 rounded-full px-5 py-2 text-[0.8rem] font-semibold tracking-wider cursor-pointer transition-all duration-300 whitespace-nowrap ${activeFilter === filter
                   ? "bg-[#2B2A25] text-[#F3F1E7]"
                   : "bg-[#DCE2CC]/60 text-[#4A5340] hover:bg-[#DCE2CC]"
                   }`}
@@ -206,7 +206,7 @@ const NewArrivals = () => {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
             <button
               onClick={() => setCartOpen(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-full bg-charcoal text-white text-xs tracking-wider hover:bg-[#454437] transition"
@@ -234,8 +234,8 @@ const NewArrivals = () => {
       </div>
 
       {/* PRODUCT GRID */}
-      <div className="max-w-325 mx-auto px-6 py-10 pb-24">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="max-w-325 mx-auto px-4 sm:px-6 py-8 sm:py-10 pb-20 sm:pb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {filtered.map((product) => (
             <div
               key={product.id}
@@ -277,8 +277,8 @@ const NewArrivals = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </button>
-                {/* Quick Actions */}
-                <div className="absolute inset-x-0 bottom-0 p-3 flex gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                {/* Quick Actions — visible by default on touch/mobile, hover-reveal on sm+ */}
+                <div className="absolute inset-x-0 bottom-0 p-3 flex gap-2 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 transition-transform duration-300">
                   <button
                     onClick={() => setQuickView(product)}
                     className="flex-1 py-2.5 bg-white/95 backdrop-blur text-charcoal text-xs tracking-widest uppercase font-medium rounded-sm hover:bg-charcoal hover:text-white transition-colors"
@@ -350,7 +350,7 @@ const NewArrivals = () => {
       </div>
 
       {/* SIZE GUIDE TEASER */}
-      <section className="bg-cream py-16 px-6 border-t border-black/4">
+      <section className="bg-cream py-12 sm:py-16 px-4 sm:px-6 border-t border-black/4">
         <div className="max-w-200 mx-auto text-center">
           <p className="text-[0.7rem] tracking-[0.35em] uppercase text-gold mb-4 font-medium">Fit Guide</p>
           <h3 className="text-2xl font-light mb-3">Not sure about your size?</h3>
@@ -358,7 +358,7 @@ const NewArrivals = () => {
             Every piece is pre-shrunk and true to size. Our garments are cut for a relaxed,
             comfortable fit inspired by traditional silhouettes.
           </p>
-          <div className="flex justify-center gap-3 mb-8">
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
             {sizes.map(size => (
               <div key={size} className="w-10 h-10 rounded-full border border-frost flex items-center justify-center text-xs text-stone bg-white">
                 {size}
@@ -372,7 +372,7 @@ const NewArrivals = () => {
       </section>
 
       {/* NEW: Craftsmanship Banner */}
-      <section className="bg-charcoal py-16 px-6 text-white">
+      <section className="bg-charcoal py-12 sm:py-16 px-4 sm:px-6 text-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div>
             <Leaf size={28} className="mx-auto mb-3 text-sage" />
@@ -402,10 +402,10 @@ const NewArrivals = () => {
             className="bg-white rounded-sm max-w-225 w-full max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 shadow-2xl animate-fadeIn"
             onClick={e => e.stopPropagation()}
           >
-            <div className="aspect-square bg-cream">
+            <div className="aspect-4/3 sm:aspect-square bg-cream">
               <img src={quickView.image} alt={quickView.name} className="w-full h-full object-cover" />
             </div>
-            <div className="p-8 md:p-10 flex flex-col justify-center">
+            <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
                 {quickView.badge && (
                   <span className={`px-3 py-1 text-[0.65rem] tracking-[0.15em] uppercase rounded-sm font-semibold ${getBadgeStyle(quickView.badge)}`}>
@@ -449,7 +449,7 @@ const NewArrivals = () => {
 
               <div className="mb-6">
                 <p className="text-xs font-medium text-charcoal mb-2 uppercase tracking-wide">Select Size</p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   {sizes.map(size => (
                     <button
                       key={size}
@@ -473,13 +473,13 @@ const NewArrivals = () => {
                 )}
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => {
                     handleOrder(quickView, quickView.colors?.[0], selectedSize[quickView.id] || 'M', 1);
                     setQuickView(null);
                   }}
-                  className="flex-1 py-3.5 bg-charcoal text-white text-xs tracking-[0.15em] uppercase font-medium rounded-sm hover:bg-gold transition-colors"
+                  className="flex-1 min-w-36 py-3.5 bg-charcoal text-white text-xs tracking-[0.15em] uppercase font-medium rounded-sm hover:bg-gold transition-colors"
                 >
                   Pre-Order Now
                 </button>

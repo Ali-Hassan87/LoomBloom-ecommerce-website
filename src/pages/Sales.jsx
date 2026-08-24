@@ -297,7 +297,7 @@ function SaleCard({ item, isWishlisted, onToggleWishlist, onOpen, onAddToCart, o
   const discount = pct(item.price, item.original);
   return (
     <div className="group cursor-pointer overflow-hidden rounded-sm bg-[#FAF9F4] shadow-sm ring-1 ring-black/5 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl">
-      <div className="relative h-64 overflow-hidden bg-[#E8E6DC]" onClick={() => onOpen(item)}>
+      <div className="relative h-56 sm:h-64 overflow-hidden bg-[#E8E6DC]" onClick={() => onOpen(item)}>
         <img
           src={img(item.img)}
           alt={item.name}
@@ -331,8 +331,8 @@ function SaleCard({ item, isWishlisted, onToggleWishlist, onOpen, onAddToCart, o
             {item.stock} left
           </span>
         )}
-        {/* Quick view overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-3 flex gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+        {/* Quick view overlay — visible by default on touch/mobile, hover-reveal on sm+ */}
+        <div className="absolute inset-x-0 bottom-0 p-3 flex gap-2 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 transition-transform duration-300">
           <button
             onClick={(e) => { e.stopPropagation(); onOpen(item); }}
             className="flex-1 py-2.5 bg-white/95 backdrop-blur text-[#2B2A25] text-[11px] tracking-wider uppercase font-medium rounded-sm hover:bg-[#2B2A25] hover:text-[#F3F1E7] transition-colors"
@@ -423,7 +423,7 @@ function QuickView({ item, onClose, wishlist, onToggleWishlist, onAddToCart, onO
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative grid w-full max-w-3xl grid-cols-1 overflow-hidden rounded-sm bg-[#FAF9F4] shadow-2xl sm:grid-cols-2 animate-fadeIn"
+        className="relative grid w-full max-w-3xl grid-cols-1 overflow-hidden rounded-sm bg-[#FAF9F4] shadow-2xl sm:grid-cols-2 animate-fadeIn max-h-[92vh] overflow-y-auto"
       >
         <button
           aria-label="Close quick view"
@@ -434,7 +434,7 @@ function QuickView({ item, onClose, wishlist, onToggleWishlist, onAddToCart, onO
         </button>
 
         {/* Image side */}
-        <div className="relative h-64 sm:h-full bg-[#E8E6DC]">
+        <div className="relative h-56 sm:h-full bg-[#E8E6DC]">
           <img
             src={img(item.img)}
             alt={item.name}
@@ -481,7 +481,7 @@ function QuickView({ item, onClose, wishlist, onToggleWishlist, onAddToCart, onO
           {/* Color */}
           <div className="mt-5">
             <span className="text-xs font-semibold tracking-wider text-[#4A5340]">COLOUR</span>
-            <div className="mt-2 flex gap-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {item.colors.map((c) => (
                 <button
                   key={c}
@@ -510,8 +510,8 @@ function QuickView({ item, onClose, wishlist, onToggleWishlist, onAddToCart, onO
             </div>
           </div>
 
-          {/* Quantity + add to bag */}
-          <div className="mt-6 flex items-center gap-3">
+          {/* Quantity + add to bag — wraps instead of overflowing on narrow screens */}
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <div className="flex items-center rounded-full bg-[#DCE2CC]/60">
               <button
                 aria-label="Decrease quantity"
@@ -531,7 +531,7 @@ function QuickView({ item, onClose, wishlist, onToggleWishlist, onAddToCart, onO
             </div>
             <button
               onClick={handleAdd}
-              className="whitespace-nowrap flex flex-1 items-center justify-center gap-2 rounded-full bg-[#2B2A25] px-5 py-3 text-xs font-semibold tracking-wider text-[#F3F1E7] transition hover:bg-[#454437]"
+              className="whitespace-nowrap flex flex-1 min-w-40 items-center justify-center gap-2 rounded-full bg-[#2B2A25] px-5 py-3 text-xs font-semibold tracking-wider text-[#F3F1E7] transition hover:bg-[#454437]"
             >
               <ShoppingBag size={14} />
               ADD TO BAG · ${item.price * qty}
@@ -667,28 +667,28 @@ export default function Sales() {
       <ScrollToTop />
 
       {/* Header */}
-      <section className="bg-linear-to-b from-[#DCE2CC] to-[#F3F1E7] px-6 py-20 text-center relative overflow-hidden">
+      <section className="bg-linear-to-b from-[#DCE2CC] to-[#F3F1E7] px-4 sm:px-6 py-14 sm:py-20 text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-125 bg-[radial-gradient(circle,rgba(184,196,168,0.25)_0%,transparent_70%)] rounded-full" />
         <span className="relative text-xs font-semibold tracking-[0.25em] text-[#B85C4A]">
           FOR A LIMITED TIME 💥
         </span>
-        <h1 className="relative mt-3 font-serif text-4xl sm:text-5xl">
+        <h1 className="relative mt-3 font-serif text-3xl sm:text-4xl md:text-5xl px-2">
           End of Season Sale
         </h1>
-        <p className="relative mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#55564C]">
+        <p className="relative mx-auto mt-4 max-w-xl px-2 text-sm leading-relaxed text-[#55564C]">
           The same handwoven pieces, considered footwear, and botanical
           scents — marked down while stock lasts. Once it's gone, it's gone.
         </p>
       </section>
 
-      {/* Filters */}
+      {/* Filters — horizontally scrollable on mobile so nothing gets clipped */}
       <div className="sticky top-0 z-10 border-b border-black/5 bg-[#F3F1E7]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl justify-center gap-2 px-6 py-4 sm:justify-start">
+        <div className="mx-auto flex max-w-6xl gap-2 px-4 sm:px-6 py-3 sm:py-4 overflow-x-auto scrollbar-hide flex-nowrap">
           {FILTERS.map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`rounded-full px-5 py-2 text-xs font-semibold tracking-wider transition ${filter === f ? "bg-[#2B2A25] text-[#F3F1E7]" : "bg-[#DCE2CC]/60 text-[#4A5340] hover:bg-[#DCE2CC]"}`}
+              className={`shrink-0 whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-[0.7rem] sm:text-xs font-semibold tracking-wider transition ${filter === f ? "bg-[#2B2A25] text-[#F3F1E7]" : "bg-[#DCE2CC]/60 text-[#4A5340] hover:bg-[#DCE2CC]"}`}
             >
               {f.toUpperCase()}
             </button>
@@ -697,10 +697,10 @@ export default function Sales() {
       </div>
 
       {/* Grid */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="mb-8 flex items-center justify-between">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-16">
+        <div className="mb-8 flex items-center justify-between gap-3">
           <div>
-            <h2 className="font-serif text-2xl">Marked Down</h2>
+            <h2 className="font-serif text-xl sm:text-2xl">Marked Down</h2>
             <span className="text-xs text-[#8A8B7E]">{visible.length} items</span>
           </div>
           <button
@@ -712,7 +712,7 @@ export default function Sales() {
           </button>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {visible.map((item) => (
             <SaleCard
               key={item.name}

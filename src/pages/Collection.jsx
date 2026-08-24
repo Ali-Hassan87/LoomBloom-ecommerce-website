@@ -190,10 +190,10 @@ function QuickViewModal({ product, wishlist, onToggleWishlist, onOrder, onClose,
   return (
     <div className="fixed inset-0 z-200 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
       <div className="bg-[#FAF9F4] rounded-sm max-w-225 w-full max-h-[90vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 shadow-2xl animate-fadeIn" onClick={(e) => e.stopPropagation()}>
-        <div className="aspect-square bg-[#E8E6DC]">
+        <div className="aspect-4/3 sm:aspect-square bg-[#E8E6DC]">
           <img src={img(product.img)} alt={product.name} className="w-full h-full object-cover" />
         </div>
-        <div className="p-8 md:p-10 flex flex-col justify-center">
+        <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-3">
             {product.tag && (
               <span className={`px-3 py-1 text-[0.65rem] tracking-[0.15em] uppercase rounded-sm font-semibold ${getBadgeStyle(product.tag)}`}>
@@ -226,7 +226,7 @@ function QuickViewModal({ product, wishlist, onToggleWishlist, onOrder, onClose,
           </div>
           <div className="mb-6">
             <p className="text-xs font-medium text-[#2B2A25] mb-2 uppercase tracking-wide">Select Size</p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {SIZES.map((size) => (
                 <button
                   key={size}
@@ -242,10 +242,10 @@ function QuickViewModal({ product, wishlist, onToggleWishlist, onOrder, onClose,
             <span className="text-2xl font-light text-[#2B2A25]">${product.price}</span>
             {product.oldPrice && <span className="text-base text-stone line-through">${product.oldPrice}</span>}
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <button
               onClick={() => { onOrder(product, product.colors[0], selectedSize || "M", 1); onClose(); }}
-              className="flex-1 py-3.5 bg-[#2B2A25] text-[#F3F1E7] text-xs tracking-[0.15em] uppercase font-medium rounded-sm hover:bg-gold transition-colors"
+              className="flex-1 min-w-36 py-3.5 bg-[#2B2A25] text-[#F3F1E7] text-xs tracking-[0.15em] uppercase font-medium rounded-sm hover:bg-gold transition-colors"
             >
               Order Now
             </button>
@@ -269,7 +269,7 @@ function QuickViewModal({ product, wishlist, onToggleWishlist, onOrder, onClose,
 function ProductCard({ item, isWishlisted, onToggleWishlist, onQuickView, onAddToCart, onOrder }) {
   return (
     <div className="group overflow-hidden rounded-sm bg-[#FAF9F4] shadow-sm ring-1 ring-black/5 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl">
-      <div className="relative h-64 overflow-hidden bg-[#E8E6DC]">
+      <div className="relative h-56 sm:h-64 overflow-hidden bg-[#E8E6DC]">
         <img
           src={img(item.img)}
           alt={item.name}
@@ -294,8 +294,8 @@ function ProductCard({ item, isWishlisted, onToggleWishlist, onQuickView, onAddT
         >
           <Heart size={15} className={isWishlisted ? "text-red-500 fill-red-500" : ""} />
         </button>
-        {/* Quick View overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-3 flex gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+        {/* Quick View overlay — visible by default on touch/mobile, hover-reveal on sm+ */}
+        <div className="absolute inset-x-0 bottom-0 p-3 flex gap-2 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 transition-transform duration-300">
           <button
             onClick={() => onQuickView(item)}
             className="flex-1 py-2.5 bg-white/95 backdrop-blur text-[#2B2A25] text-[11px] tracking-widest uppercase font-medium rounded-sm hover:bg-[#2B2A25] hover:text-[#F3F1E7] transition-colors"
@@ -474,23 +474,23 @@ export default function Outfits() {
       <ScrollToTop />
 
       {/* Header */}
-      <section className="bg-linear-to-b from-[#DCE2CC] to-[#F3F1E7] px-6 py-20 text-center relative overflow-hidden">
+      <section className="bg-linear-to-b from-[#DCE2CC] to-[#F3F1E7] px-4 sm:px-6 py-14 sm:py-20 text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-125 bg-[radial-gradient(circle,rgba(184,196,168,0.25)_0%,transparent_70%)] rounded-full" />
         <span className="relative text-xs font-semibold tracking-[0.25em] text-[#B85C4A]">THE FULL COLLECTION</span>
-        <h1 className="relative mt-3 font-serif text-4xl sm:text-5xl">Outfits, Shoes &amp; Perfumes</h1>
-        <p className="relative mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#55564C]">
+        <h1 className="relative mt-3 font-serif text-3xl sm:text-4xl md:text-5xl px-2">Outfits, Shoes &amp; Perfumes</h1>
+        <p className="relative mx-auto mt-4 max-w-xl px-2 text-sm leading-relaxed text-[#55564C]">
           Handwoven pieces, considered footwear, and botanical scents — every category finished with our signature icy touch.
         </p>
       </section>
 
-      {/* Tabs */}
+      {/* Tabs — horizontally scrollable on mobile so nothing gets clipped */}
       <div className="sticky top-0 z-10 border-b border-black/5 bg-[#F3F1E7]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl justify-center gap-2 px-6 py-4 sm:justify-start">
+        <div className="mx-auto flex max-w-6xl gap-2 px-4 sm:px-6 py-3 sm:py-4 overflow-x-auto scrollbar-hide flex-nowrap">
           {TABS.map((t) => (
             <button
               key={t.key}
               onClick={() => handleTab(t.key)}
-              className={`rounded-full px-5 py-2 text-xs font-semibold tracking-wider transition ${active === t.key
+              className={`shrink-0 whitespace-nowrap rounded-full px-4 sm:px-5 py-2 text-[0.7rem] sm:text-xs font-semibold tracking-wider transition ${active === t.key
                   ? "bg-[#2B2A25] text-[#F3F1E7]"
                   : "bg-[#DCE2CC]/60 text-[#4A5340] hover:bg-[#DCE2CC]"
                 }`}
@@ -502,10 +502,10 @@ export default function Outfits() {
       </div>
 
       {/* Cart summary strip */}
-      <div className="mx-auto max-w-6xl px-6 pt-6">
-        <div className="flex items-center justify-between">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-4 sm:pt-6">
+        <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="font-serif text-2xl">{activeTab.label}</h2>
+            <h2 className="font-serif text-xl sm:text-2xl">{activeTab.label}</h2>
             <span className="text-xs text-[#8A8B7E]">{activeTab.data.length} items</span>
           </div>
           <button
@@ -519,8 +519,8 @@ export default function Outfits() {
       </div>
 
       {/* Grid */}
-      <section className="mx-auto max-w-6xl px-6 py-10">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-10">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {active === "aboutproducts"
             ? activeTab.data.map((item) => <AboutProducts key={item.title} item={item} />)
             : activeTab.data.map((item) => (
@@ -538,20 +538,20 @@ export default function Outfits() {
       </section>
 
       {/* Newsletter / Craft Banner */}
-      <section className="bg-[#DCE2CC] py-16 px-6 border-t border-black/5">
+      <section className="bg-[#DCE2CC] py-12 sm:py-16 px-4 sm:px-6 border-t border-black/5">
         <div className="max-w-2xl mx-auto text-center">
           <Sparkles size={24} className="mx-auto mb-4 text-[#5C6B49]" />
           <h3 className="font-serif text-2xl mb-3">Join the LoomBloom Circle</h3>
           <p className="text-sm text-[#4A5340] leading-relaxed mb-6">
             Be the first to know when new frost-dyed batches drop. Subscribers receive early access and a 10% welcome gift.
           </p>
-          <div className="flex gap-2 max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
             <input
               type="email"
               placeholder="Your email address"
               className="flex-1 px-4 py-3 rounded-sm bg-white border border-black/10 text-sm outline-none focus:border-[#5C6B49] placeholder:text-[#8A8B7E]"
             />
-            <button className="px-6 py-3 bg-[#2B2A25] text-[#F3F1E7] text-xs tracking-[0.15em] uppercase font-medium rounded-sm hover:bg-[#454437] transition-colors">
+            <button className="w-full sm:w-auto px-6 py-3 bg-[#2B2A25] text-[#F3F1E7] text-xs tracking-[0.15em] uppercase font-medium rounded-sm hover:bg-[#454437] transition-colors">
               Subscribe
             </button>
           </div>
